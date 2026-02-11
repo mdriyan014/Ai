@@ -1,31 +1,49 @@
+import os
 import requests
 from fastapi import FastAPI, Query
 from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
+# ================= CONFIG =================
+
 CHATANYWHERE_URL = "https://api.chatanywhere.tech/v1/chat/completions"
 
-# 🔴 এখানে সরাসরি আপনার API KEY বসান
-CHATANYWHERE_API_KEY = "sk-9UxwxtCFHWALxd8TmiWuEhcl6usedDd464YRycIBYcgUireO"
+# 🔐 Vercel Environment Variable থেকে নেবে
+CHATANYWHERE_API_KEY = os.getenv("CHATANYWHERE_API_KEY")
+
+# আপনার local access key
+LOCAL_ACCESS_KEY = "prince"
+
+# =========================================
+
 
 @app.get("/")
 def home():
     return {
         "status": True,
-        "message": "AI API is running",
+        "message": "ChatAnywhere AI API is running",
         "usage": "/api/ask?key=prince&ask=Hello"
     }
+
 
 @app.get("/api/ask")
 def ask_ai(
     key: str = Query(...),
     ask: str = Query(...)
 ):
-    if key != "prince":
+    # 🔐 Access key check
+    if key != LOCAL_ACCESS_KEY:
         return JSONResponse(
             {"status": False, "error": "Invalid access key"},
             status_code=403
+        )
+
+    # 🔴 Check API key
+    if not CHATANYWHERE_API_KEY:
+        return JSONResponse(
+            {"status": False, "error": "Server API key not configured"},
+            status_code=500
         )
 
     headers = {
@@ -36,18 +54,21 @@ def ask_ai(
     payload = {
         "model": "gpt-3.5-turbo",
         "messages": [
+            {"role": "system", "content": "You are a helpful assistant"},
             {"role": "user", "content": ask}
-        ]
+        ],
+        "temperature": 0.7
     }
 
     try:
-        r = requests.post(
+        response = requests.post(
             CHATANYWHERE_URL,
             headers=headers,
             json=payload,
             timeout=30
         )
-        data = r.json()
+
+        data = response.json()
 
         if "choices" not in data:
             return JSONResponse(
@@ -65,4 +86,4 @@ def ask_ai(
         return JSONResponse(
             {"status": False, "error": str(e)},
             status_code=500
-        )
+    )
