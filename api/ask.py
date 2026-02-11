@@ -7,7 +7,7 @@ app = FastAPI()
 
 # ChatAnywhere API config
 CHATANYWHERE_URL = "https://api.chatanywhere.tech/v1/chat/completions"
-CHATANYWHERE_API_KEY = os.getenv("CHATANYWHERE_API_KEY")  # ✅ CORRECT
+CHATANYWHERE_API_KEY = os.getenv("sk-9UxwxtCFHWALxd8TmiWuEhcl6usedDd464YRycIBYcgUireO")  # ✅ CORRECT
 
 # Home route (optional but helpful)
 @app.get("/")
