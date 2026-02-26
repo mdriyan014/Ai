@@ -14,7 +14,7 @@ def home():
     return {
         "status": True,
         "message": "AI API is running",
-        "usage": "/api/ask?key=prince&ask=Hello"
+        "usage": "/api/ask?key=king&ask=Hello"
     }
 
 @app.get("/api/ask")
