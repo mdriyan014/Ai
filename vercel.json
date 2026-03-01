@@ -1,13 +1,14 @@
 {
-  "functions": {
-    "api/ask.py": {
-      "runtime": "python3.9"
+  "builds": [
+    {
+      "src": "app.py",
+      "use": "@vercel/python"
     }
-  },
+  ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/ask.py"
+      "src": "/(.*)",
+      "dest": "app.py"
     }
   ]
 }
