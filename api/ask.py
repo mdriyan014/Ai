@@ -1,4 +1,5 @@
 import requests
+import os
 from fastapi import FastAPI, Query
 from fastapi.responses import JSONResponse
 
@@ -7,7 +8,7 @@ app = FastAPI()
 CHATANYWHERE_URL = "https://api.chatanywhere.tech/v1/chat/completions"
 
 # 👉 এখানে নিজের API KEY বসাবেন
-CHATANYWHERE_API_KEY = "YOUR_CHATANYWHERE_API_KEY"
+CHATANYWHERE_API_KEY = os.getenv("CHATANYWHERE_API_KEY")
 
 @app.get("/")
 def home():
