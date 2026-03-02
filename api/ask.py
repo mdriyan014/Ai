@@ -1,5 +1,4 @@
 import requests
-import os
 from fastapi import FastAPI, Query
 from fastapi.responses import JSONResponse
 
@@ -8,7 +7,7 @@ app = FastAPI()
 CHATANYWHERE_URL = "https://api.chatanywhere.tech/v1/chat/completions"
 
 # 👉 এখানে নিজের API KEY বসাবেন
-CHATANYWHERE_API_KEY = os.getenv("sk-Vjxdtfh6amyk2hcFI9cpib9owQ5LogPFIAfm6UjjStK3Wo3U")
+CHATANYWHERE_API_KEY = "YOUR_CHATANYWHERE_API_KEY"
 
 @app.get("/")
 def home():
@@ -23,7 +22,7 @@ def ask_ai(
     key: str = Query(...),
     ask: str = Query(...)
 ):
-    if key != "dark":
+    if key != "prince":
         return JSONResponse({"status": False, "error": "Invalid access key"}, status_code=403)
 
     headers = {
