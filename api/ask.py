@@ -8,7 +8,7 @@ app = FastAPI()
 CHATANYWHERE_URL = "https://api.chatanywhere.tech/v1/chat/completions"
 
 # 👉 এখানে নিজের API KEY বসাবেন
-CHATANYWHERE_API_KEY = os.getenv("CHATANYWHERE_API_KEY")
+CHATANYWHERE_API_KEY = os.getenv("sk-Vjxdtfh6amyk2hcFI9cpib9owQ5LogPFIAfm6UjjStK3Wo3U")
 
 @app.get("/")
 def home():
